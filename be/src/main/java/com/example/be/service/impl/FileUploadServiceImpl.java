@@ -6,6 +6,8 @@ import com.example.be.service.FileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FileUploadServiceImpl implements FileUploadService {
     @Autowired
@@ -13,5 +15,10 @@ public class FileUploadServiceImpl implements FileUploadService {
     @Override
     public void save(FileUpload fileUpload) {
         fileUploadRepository.save(fileUpload);
+    }
+
+    @Override
+    public List<FileUpload> findAll() {
+        return fileUploadRepository.findAll();
     }
 }

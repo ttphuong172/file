@@ -1,0 +1,12 @@
+<table>
+  <tr *ngFor="let file of files">
+    <td>{{file.id}}</td>
+    <td>{{file.name}}</td>
+    <td>
+      <a href="{{file.uri}}" target="_blank">{{file.name}}</a>
+    </td>
+    <td>
+<!--      <img src="{{file.uri}}" alt="">-->
+    </td>
+  </tr>
+</table>
