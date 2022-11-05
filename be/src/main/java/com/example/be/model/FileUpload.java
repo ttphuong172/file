@@ -14,5 +14,6 @@ public class FileUpload {
     @Id
     private String id;
     private String name;
-    private String uri;
+    private int year;
+    private String fileName;
 }

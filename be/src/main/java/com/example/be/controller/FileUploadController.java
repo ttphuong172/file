@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -23,15 +24,22 @@ public class FileUploadController {
     public ResponseEntity<String> upload (@RequestParam("id") String id,@RequestParam("name") String name,@RequestParam("file") MultipartFile file){
 
         StringBuilder currentDir = new StringBuilder(System.getProperty("user.dir"));
+        int currentYear = LocalDate.now().getYear();
         currentDir.delete(currentDir.length()-2,currentDir.length());
-        currentDir.append("fe\\src\\assets\\images");
+        currentDir.append("fe\\src\\assets\\images\\" + currentYear);
+
+        try {
+            Files.createDirectories(Paths.get(String.valueOf(currentDir)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         try {
             Files.copy(file.getInputStream(), Paths.get(String.valueOf(currentDir)).resolve(file.getOriginalFilename()));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        FileUpload fileUpload = new FileUpload(id,name,"assets\\images" + "\\" + file.getOriginalFilename());
+        FileUpload fileUpload = new FileUpload(id,name,currentYear,file.getOriginalFilename());
         fileUploadService.save(fileUpload);
 
         return new ResponseEntity<>(HttpStatus.OK);
