@@ -1,0 +1,10 @@
+<p>upload works!</p>
+<label>ID:</label>
+<input type="text"  [(ngModel)]="value">
+<label>Name</label>
+<input type="text" [(ngModel)]="name">
+<br>
+<input type="file" (change)="onSelected($event)">
+
+<button (click)="upload()">Upload</button>
+

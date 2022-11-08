@@ -21,4 +21,9 @@ public class FileUploadServiceImpl implements FileUploadService {
     public List<FileUpload> findAll() {
         return fileUploadRepository.findAll();
     }
+
+    @Override
+    public FileUpload findById(String id) {
+        return fileUploadRepository.findById(id).orElse(null);
+    }
 }
