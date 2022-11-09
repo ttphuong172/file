@@ -13,7 +13,10 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/files")
@@ -22,84 +25,93 @@ public class FileUploadController {
     @Autowired
     private FileUploadService fileUploadService;
 
+    //    Khi chay local
+    String currentDir = System.getProperty("user.dir").substring(0, System.getProperty("user.dir").length() - 3).concat("\\fe\\src\\assets\\upload\\");
+
+//    Khi build tren server
+//    String currentDir = System.getProperty("user.dir").concat("\\webapps\\qlvb\\assets\\upload\\") ;
+
     @PostMapping("upload")
-    public ResponseEntity<String> upload(@RequestParam("id") String id,@RequestParam("name") String name,@RequestParam("file") MultipartFile file) {
-        String message="";
-        System.out.println(System.getProperty("user.dir"));
-        System.out.println("Id:" +id);
-        System.out.println("Name: " + name);
-        System.out.println("File:"+file.getOriginalFilename());
+    public ResponseEntity<String> upload(@RequestParam("soCongVan") String soCongVan, @RequestParam("tenCongVan") String tenCongVan, @RequestParam("file") MultipartFile file) {
+        Integer id;
+        List<FileUpload> fileUploadList = fileUploadService.findAll();
+        if(fileUploadList.size()==0){
+            id=1;
+        } else {
+            System.out.println(fileUploadList.get(fileUploadList.size()-1).getId());
+            id = fileUploadList.get(fileUploadList.size()-1).getId() + 1;
+        }
 
-        String currentDir = System.getProperty("user.dir");
+        String fileDir = currentDir.concat(LocalDate.now().getYear() + "\\" + id);
 
-        String uri= currentDir + "/uploads" + "\\" + LocalDate.now().getYear() + "\\" + LocalDate.now().getMonthValue() + "\\" + id;
 
+//        Tao thu muc
         try {
-            Files.createDirectories(Paths.get(uri));
+            Files.createDirectories(Paths.get(fileDir));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        Chep file
+        try {
+            Files.copy(file.getInputStream(), Paths.get(fileDir).resolve(file.getOriginalFilename()));
+        } catch (FileAlreadyExistsException e) {
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        Luu vao CSDL
+        FileUpload fileUpload = new FileUpload();
+        fileUpload.setId(id);
+        fileUpload.setSoCongVan(soCongVan);
+        fileUpload.setTenCongVan(tenCongVan);
+        fileUpload.setNam(LocalDate.now().getYear());
+        fileUpload.setTenFile(file.getOriginalFilename());
+        fileUploadService.save(fileUpload);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+
+
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<FileUpload> findById(@PathVariable Integer id) {
+        System.out.println(id);
+        FileUpload fileUpload = fileUploadService.findById(id);
+        System.out.println(fileUpload);
+        return new ResponseEntity<>(fileUploadService.findById(id), HttpStatus.OK);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deleteById(@PathVariable Integer id) {
+
+        FileUpload fileUpload = fileUploadService.findById(id);
+
+        String fileDir = currentDir.concat(fileUpload.getNam() + "\\" + fileUpload.getId());
+        System.out.println(fileDir);
+
+//Xoa File
+        try {
+            Files.delete(Paths.get(fileDir + "\\" + fileUpload.getTenFile()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//Xoa thu muc
+        try {
+            Files.delete(Paths.get(fileDir));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        try {
-            Files.copy(file.getInputStream(), Paths.get(String.valueOf(uri)).resolve(file.getOriginalFilename()));
-        } catch (FileAlreadyExistsException e){
-            message="File da ton tai";
-            System.out.println(message);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+        fileUploadService.delete(fileUpload);
 
         return new ResponseEntity<>(HttpStatus.OK);
-
-//        StringBuilder currentDir = new StringBuilder(System.getProperty("user.dir"));
-//        int currentYear = LocalDate.now().getYear();
-//        currentDir.delete(currentDir.length()-2,currentDir.length());
-//        currentDir.append("\\webapps\\qlvb\\assets\\images\\" + currentYear+"\\"+ id);
-//
-//        try {
-//            Files.createDirectories(Paths.get(String.valueOf(currentDir)));
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        try {
-//            Files.copy(file.getInputStream(), Paths.get(String.valueOf(currentDir)).resolve(file.getOriginalFilename()));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        FileUpload fileUpload = new FileUpload(id,name,currentYear,file.getOriginalFilename());
-//        fileUploadService.save(fileUpload);
-//
-//        return new ResponseEntity<>(String.valueOf(currentDir),HttpStatus.OK);
     }
+
 
     @GetMapping("")
     public ResponseEntity<List<FileUpload>> findAll() {
         return new ResponseEntity<>(fileUploadService.findAll(), HttpStatus.OK);
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<String> deleteById(@PathVariable String id) {
-
-        StringBuilder currentDir = new StringBuilder(System.getProperty("user.dir"));
-        int currentYear = LocalDate.now().getYear();
-//        currentDir.delete(currentDir.length()-2,currentDir.length());
-        currentDir.append("\\webapps\\qlvb\\assets\\images\\" + currentYear + "\\" + id);
-
-        FileUpload fileUpload = fileUploadService.findById(id);
-
-        System.out.println(fileUpload.getYear());
-        System.out.println(fileUpload.getFileName());
-
-        try {
-            Files.delete(Paths.get(currentDir + "\\" + fileUpload.getFileName()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return new ResponseEntity<>(id, HttpStatus.OK);
-    }
 
 }

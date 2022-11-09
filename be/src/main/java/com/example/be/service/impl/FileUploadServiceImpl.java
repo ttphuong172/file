@@ -23,7 +23,12 @@ public class FileUploadServiceImpl implements FileUploadService {
     }
 
     @Override
-    public FileUpload findById(String id) {
+    public FileUpload findById(Integer id) {
         return fileUploadRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void delete(FileUpload fileUpload) {
+        fileUploadRepository.delete(fileUpload);
     }
 }

@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -12,8 +13,9 @@ import javax.persistence.Id;
 @AllArgsConstructor
 public class FileUpload {
     @Id
-    private String id;
-    private String name;
-    private int year;
-    private String fileName;
+    private Integer id;
+    private String soCongVan;
+    private String tenCongVan;
+    private int nam;
+    private String tenFile;
 }

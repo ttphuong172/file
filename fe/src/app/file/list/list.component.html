@@ -1,16 +1,17 @@
 <h3>LIST FILE</h3>
 <table>
   <tr *ngFor="let file of files">
+    <td></td>
     <td>{{file.id}}</td>
-    <td>{{file.name}}</td>
+    <td>{{file.soCongVan}}</td>
+    <td>{{file.soCongVan}}</td>
+    <td>{{file.tenCongVan}}</td>
     <td>
-      <a href="assets/images/{{file.year}}/{{file.id}}/{{file.fileName}}" target="_blank">{{file.fileName}}</a>
+      <a href="assets/upload/{{file.nam}}/{{file.id}}/{{file.tenFile}}" target="_blank">{{file.tenFile}}</a>
     </td>
     <td>
 <!--      <img src="{{file.uri}}" alt="">-->
     </td>
-    <td>
-      <button (click)="deleteVB()">Delete</button>
-    </td>
+
   </tr>
 </table>
