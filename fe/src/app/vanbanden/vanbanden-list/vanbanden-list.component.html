@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-2"></div>
+  <div class="col-8">
+    <h3>Danh sách văn bản đến</h3>
+    <a routerLink="create">Thêm mới văn bản đến</a>
+    <table class="table table-bordered">
+
+      <tbody>
+
+      <tr *ngFor="let vanBanDen of vanBanDens">
+        <td>
+          <a [routerLink]="['detail/'+ vanBanDen.id]" style="text-decoration: none">
+            <div>
+              <h6>Tên văn bản: {{vanBanDen.tenVanBanDen}}</h6>
+              <p>Ngày đến: {{vanBanDen.ngayDen}}</p>
+              <p>Nơi phát hành: {{vanBanDen.noiPhatHanh}}</p>
+            </div>
+          </a>
+        </td>
+      </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+  <div class="col-2"></div>
+</div>

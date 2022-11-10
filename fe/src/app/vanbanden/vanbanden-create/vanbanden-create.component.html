@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col-2"></div>
+  <div class="col-8">
+    <h3>Thêm mới Văn bản đến</h3>
+    <div class="row khoangcach">
+      <div class="col-3">
+        <label>Ngày Phát Hành</label>
+      </div>
+      <div class="col-9">
+        <input type="date" class="form-control" [(ngModel)]="ngayPhatHanh">
+      </div>
+    </div>
+    <div class="row khoangcach">
+      <div class="col-3">
+        <label>Số Văn Bản Đến</label>
+      </div>
+      <div class="col-9">
+        <input type="text" class="form-control" [(ngModel)]="soVanBanDen">
+      </div>
+    </div>
+    <div class="row khoangcach">
+      <div class="col-3">
+        <label>Tên Văn Bản Đến</label>
+      </div>
+      <div class="col-9">
+        <input type="text" class="form-control" [(ngModel)]="tenVanBanDen">
+      </div>
+    </div>
+
+    <div class="row khoangcach">
+      <div class="col-3">
+        <label>Nơi Phát Hành</label>
+      </div>
+      <div class="col-9">
+        <input type="text" class="form-control" [(ngModel)]="noiPhatHanh">
+      </div>
+    </div>
+
+    <div class="row khoangcach">
+      <div class="col-3">
+        <label>File đính kèm</label>
+      </div>
+      <div class="col-9">
+        <input type="file" (change)="onSelected($event)">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-2"></div>
+      <div class="col-2"></div>
+      <div class="col-2"></div>
+      <div class="col-2"></div>
+      <div class="col-2">
+        <button class="btn btn-primary" (click)="upload()">Thêm mới</button>
+      </div>
+    </div>
+
+  </div>
+  <div class="col-2"></div>
+</div>
+
