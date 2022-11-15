@@ -1,9 +1,5 @@
  <h3>Chi tiết văn bản đến</h3>
  <div *ngIf="vanBanDen">
-   <div *ngIf="account.role=='ROLE_ADMIN'">
-     <button style="margin-right: 10px">Edit</button>
-     <button>Delete</button>
-   </div>
     <div class="row">
       <div class="col-3">
         <label> Ngày Đến</label>
@@ -45,7 +41,7 @@
     <div class="row">
       <div class="col-3">Người chịu trách nhiệm chính</div>
       <div class="col-9">
-        {{vanBanDen.account.name}}
+<!--        {{vanBanDen.account.name}}-->
       </div>
     </div>
  </div>

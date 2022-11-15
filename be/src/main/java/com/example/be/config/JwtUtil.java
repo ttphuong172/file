@@ -1,6 +1,7 @@
 package com.example.be.config;
 
 
+import com.example.be.model.Account;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -20,7 +21,7 @@ public class JwtUtil implements Serializable {
 
     public static final long JWT_TOKEN_VALIDITY = 10 * 60 * 60;
 
-    private String secret = "secret";
+    private String secret = "PhongTran@123";
 
     //retrieve username from jwt token
     public String getUsernameFromToken(String token) {
@@ -50,14 +51,18 @@ public class JwtUtil implements Serializable {
     //generate token for user
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("role",userDetails.getAuthorities().stream().findFirst().get());
         return doGenerateToken(claims, userDetails.getUsername());
     }
 
     private String doGenerateToken(Map<String, Object> claims, String subject) {
 
-        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(subject)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
-                .signWith(SignatureAlgorithm.HS512, secret).compact();
+                .signWith(SignatureAlgorithm.HS512, "PhongTran@123").compact();
     }
 
     //validate token

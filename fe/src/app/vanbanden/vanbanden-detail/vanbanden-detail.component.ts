@@ -24,11 +24,6 @@ export class VanbandenDetailComponent implements OnInit {
     this.vanbandenService.findById(id).subscribe(
       (data)=>{
         this.vanBanDen=data;
-        this.accountService.findById(this.authService.getUsername()).subscribe(
-          (data)=>{
-            this.account=data;
-          }
-        )
       }
     )
   }

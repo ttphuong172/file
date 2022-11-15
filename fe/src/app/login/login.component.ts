@@ -31,47 +31,23 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.accountService.findById(this.authService.getUsername()).subscribe(
-      (data)=>{
-        this.account=data;
-        if (this.account.role == 'ROLE_ADMIN') {
-          this.router.navigateByUrl("/vanbanden");
-        } else {
-          this.router.navigateByUrl("/vanbanden");
-        }
-      }
-    )
-
+    if (this.authService.getToken()){
+      this.router.navigateByUrl("/vanbanden")
+    };
   }
 
   login() {
     this.loginService.login(this.formLogin.value).subscribe(
       (data:any) => {
         this.authService.setToken(data.jwtToken);
-        this.authService.setUsername(data.username);
-        // console.log(data)
+
+        this.router.navigateByUrl("/vanbanden")
+
         // @ts-ignore
-        // let username= this.jwtHelperService.decodeToken(this.authService.getToken()).sub;
-
-        this.username =this.authService.getUsername();
-
-        this.accountService.findById(this.username).subscribe(
-          (data)=>{
-          this.account=data;
-
-            if (this.account.role == 'ROLE_ADMIN') {
-              this.router.navigateByUrl("/vanbanden");
-            } else {
-              this.router.navigateByUrl("/vanbanden");
-            }
-          }
-        )
-
-
-
+        // const abc= this.jwtHelperService.decodeToken(this.authService.getToken());
 
       }
-    )
+        )
   }
 
 }

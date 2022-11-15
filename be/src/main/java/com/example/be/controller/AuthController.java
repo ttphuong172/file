@@ -44,17 +44,17 @@ public class AuthController {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(jwtRequest.getUsername(), jwtRequest.getPassword()));
         } catch (DisabledException e) {
 //            return new JwtResponse(token, username,role,"Account disabled !");
-            return new JwtResponse(token,username);
+            return new JwtResponse(token);
         } catch (BadCredentialsException e) {
 //            return new JwtResponse(token, username,role,"Username or password is incorrect !");
-            return new JwtResponse(token,username);
+            return new JwtResponse(token);
         }
 
         userDetails = myUserDetailsService.loadUserByUsername(jwtRequest.getUsername());
         token = jwtUtil.generateToken(userDetails);
-        username = jwtRequest.getUsername();
+//        username = jwtRequest.getUsername();
         role = accountService.findById(jwtRequest.getUsername()).getRole();
 //        return new JwtResponse(token, username, role,"Login succesfull");
-        return new JwtResponse(token,username);
+        return new JwtResponse(token);
     }
 }

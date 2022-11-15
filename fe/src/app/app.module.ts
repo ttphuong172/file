@@ -13,6 +13,7 @@ import {AccountEditComponent} from './account/account-edit/account-edit.componen
 import {AccountCreateComponent} from './account/account-create/account-create.component';
 import {LoginComponent} from './login/login.component';
 ;import {JWT_OPTIONS, JwtHelperService, JwtModule} from "@auth0/angular-jwt";
+import {LoginGuard} from "../service/login.guard";
 
 
 @NgModule({
@@ -34,7 +35,7 @@ import {LoginComponent} from './login/login.component';
     JwtModule,
     RouterModule.forRoot([
       {path: "", component: LoginComponent},
-      {path: "vanbanden", component: VanbandenListComponent},
+      {path: "vanbanden", component: VanbandenListComponent,canActivate:[LoginGuard]},
       {path: "vanbanden/create", component: VanbandenCreateComponent},
       {path: "vanbanden/detail/:id", component: VanbandenDetailComponent},
       {path: "account", component: AccountListComponent},

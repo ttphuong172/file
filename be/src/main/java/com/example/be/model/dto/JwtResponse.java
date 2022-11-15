@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class JwtResponse {
     private String jwtToken;
-    private String username;
+//    private String username;
 //    private ERole role;
 //    private String message;
 }
