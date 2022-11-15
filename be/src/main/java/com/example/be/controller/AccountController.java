@@ -5,6 +5,7 @@ import com.example.be.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +16,9 @@ import java.util.List;
 public class AccountController {
     @Autowired
     private AccountService accountService;
+
+    BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
     @GetMapping("")
     public ResponseEntity<List<Account>> findAll(){
         return new ResponseEntity<>(accountService.findAll(), HttpStatus.OK);
@@ -22,5 +26,31 @@ public class AccountController {
     @GetMapping("{username}")
     public ResponseEntity<Account> findById(@PathVariable String username){
         return new ResponseEntity<>(accountService.findById(username),HttpStatus.OK);
+    }
+
+    @GetMapping("reset/{username}")
+    public ResponseEntity <String> resetPassword(@PathVariable String username){
+        Account account = accountService.findById(username);
+
+        account.setPassword(bCryptPasswordEncoder.encode("123456"));
+
+        accountService.save(account);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @PutMapping("{username}")
+    public ResponseEntity<String> update(@PathVariable String username, @RequestBody Account account){
+        Account currentAccount = accountService.findById(username);
+
+        currentAccount.setName(account.getName());
+        currentAccount.setRole(account.getRole());
+        currentAccount.setDepartment(account.getDepartment());
+        accountService.save(currentAccount);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @PostMapping("")
+    public ResponseEntity<String> save(@RequestBody Account account){
+        account.setPassword(bCryptPasswordEncoder.encode("123456"));
+        accountService.save(account);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

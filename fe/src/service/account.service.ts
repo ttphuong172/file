@@ -16,4 +16,13 @@ export class AccountService {
   findById(username:any){
     return this.httpClient.get(this.apiURL+ '/api/accounts/'+ username)
   }
+  resetPassword(username:any){
+    return this.httpClient.get(this.apiURL+ '/api/accounts/reset/'+ username)
+  }
+  update(username: any, account:any){
+    return this.httpClient.put(this.apiURL+ '/api/accounts/'+ username,account)
+  }
+  save(account:any){
+    return this.httpClient.post(this.apiURL+ '/api/accounts',account)
+  }
 }

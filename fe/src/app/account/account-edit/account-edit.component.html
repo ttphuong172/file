@@ -1,45 +1,55 @@
-<div class="row">
-  <div class="col-2"></div>
-  <div class="col-8">
-    <h3>Chỉnh sửa tài khoản</h3>
-    <form [formGroup]="accountForm" action="">
-      <div class="row">
-        <div class="col-3"><label>Tài khoản</label></div>
-        <div class="col-9">
-          <input type="text" class="form-control" formControlName="username">
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-3"><label>Họ và tên</label></div>
-        <div class="col-9">
-          <input type="text" class="form-control" formControlName="name">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-3">
-          <label>Quyền</label>
-        </div>
-        <div class="col-9">
-          <select *ngIf="account" name=""  class="form-control">
-            <option *ngFor="let role of roleList"  [selected]="account.role==role" value="role">{{role}}</option>
-          </select>
-        </div>
-
-        <div class="row">
-          <div class="col-3">
-            <label>Bộ phận</label>
-          </div>
-          <div class="col-9">
-            <select name="" class="form-control">
-              <option *ngFor="" value=""></option>
-            </select>
-          </div>
-        </div>
-
-      </div>
-
-    </form>
+<h3>Chỉnh sửa tài khoản</h3>
+<form [formGroup]="accountForm" action="">
+  <div class="row khoangcach">
+    <div class="col-3"><label>Tài khoản</label></div>
+    <div class="col-9">
+      <input type="text" class="form-control" formControlName="username">
+    </div>
   </div>
-  <div class="col-2"></div>
-</div>
+
+  <div class="row khoangcach">
+    <div class="col-3"><label>Họ và tên</label></div>
+    <div class="col-9">
+      <input type="text" class="form-control" formControlName="name">
+    </div>
+  </div>
+  <div class="row khoangcach">
+    <div class="col-3">
+      <label>Quyền</label>
+    </div>
+    <div class="col-9">
+      <select *ngIf="account" name="" class="form-control" formControlName="role">
+        <option *ngFor="let role of roleList" [selected]="account.role==role" [value]="role">{{role}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row khoangcach">
+    <div class="col-3">
+      <label>Bộ phận</label>
+    </div>
+    <div class="col-9">
+      <select name="" class="form-control" formControlName="department" [compareWith]="compareByID">
+        <option *ngFor="let department of departmentList" [ngValue]="department">{{department.name}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row khoangcach">
+    <div class="col-2"></div>
+    <div class="col-2"></div>
+    <div class="col-2"></div>
+    <div class="col-2"></div>
+    <div class="col-2">
+      <button (click)="resetPassword()" class="btn btn-info" style="width: 100%">Reset password</button>
+    </div>
+    <div class="col-2">
+      <button (click)="update()" class="btn btn-primary" style="width: 100%">OK</button>
+    </div>
+  </div>
+
+
+</form>
+
+
+<!--{{accountForm.value | json}}-->

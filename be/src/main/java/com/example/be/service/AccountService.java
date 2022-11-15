@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface AccountService {
     List<Account> findAll();
-    Account findById(String usernamr);
+    Account findById(String username);
+    void save(Account account);
 }

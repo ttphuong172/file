@@ -36,7 +36,7 @@ export class VanbandenCreateComponent implements OnInit {
     formData.append("file", this.file)
     this.vanbandenService.save(formData).subscribe(
       ()=>{
-        this.router.navigateByUrl("")
+        this.router.navigateByUrl("/vanbanden")
       }
     )
   }

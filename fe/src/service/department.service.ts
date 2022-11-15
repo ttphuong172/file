@@ -11,6 +11,6 @@ export class DepartmentService {
     private httpClient:HttpClient
   ) { }
   findAll(){
-    return this.httpClient.get(this.apiURL + '/api')
+    return this.httpClient.get(this.apiURL + '/api/departments')
   }
 }

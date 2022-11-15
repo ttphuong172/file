@@ -21,4 +21,9 @@ public class AccountServiceImpl implements AccountService {
     public Account findById(String username) {
         return accountRepository.findById(username).orElse(null);
     }
+
+    @Override
+    public void save(Account account) {
+        accountRepository.save(account);
+    }
 }

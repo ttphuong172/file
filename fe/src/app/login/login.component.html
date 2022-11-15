@@ -1,0 +1,18 @@
+<form [formGroup]="formLogin">
+<div style="display: flex;justify-content: center; padding-top: 20px">
+  <div>
+    <div style="padding-bottom: 10px">
+      <label style="width: 150px">Tên đăng nhập</label>
+      <input type="text" formControlName="username">
+    </div>
+    <div style="padding-bottom: 10px">
+      <label style="width: 150px">Password</label>
+      <input type="text" formControlName="password">
+    </div>
+    <div style="text-align: right">
+      <button (click)="login()">Đăng nhập</button>
+    </div>
+  </div>
+</div>
+</form>
+

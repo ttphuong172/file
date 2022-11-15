@@ -1,25 +1,24 @@
-<div class="row">
-  <div class="col-2"></div>
-  <div class="col-8">
-    <h3>Danh sách Tài khoản</h3>
-    <table class="table table-bordered">
-      <thead>
-      <th>Tên tài khoản</th>
-      <th>Họ và tên</th>
-      <th>Nhóm tài khoản</th>
-      <th>Bộ phận</th>
-      <th>Action</th>
-      </thead>
-      <tbody>
-      <tr *ngFor="let account of accountList">
-        <td>{{account.username}}</td>
-        <td>{{account.name}}</td>
-        <td>{{account.role}}</td>
-        <td>{{account.department.name}}</td>
-        <td style="text-align: center" [routerLink]="['/account/edit/' + account.username]"><button class="btn btn-primary">Edit</button></td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="col-2"></div>
-</div>
+<h3>Danh sách Tài khoản</h3>
+<a routerLink="create">Thêm mới tài khoản</a>
+
+<table class="table table-bordered">
+  <thead>
+  <th>Tên tài khoản</th>
+  <th>Họ và tên</th>
+  <th>Nhóm tài khoản</th>
+  <th>Bộ phận</th>
+  <th>Action</th>
+  </thead>
+  <tbody>
+  <tr *ngFor="let account of accountList">
+    <td>{{account.username}}</td>
+    <td>{{account.name}}</td>
+    <td>{{account.role}}</td>
+    <td>{{account.department.name}}</td>
+    <td style="text-align: center" [routerLink]="['/account/edit/' + account.username]">
+      <button class="btn btn-primary">Edit</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+

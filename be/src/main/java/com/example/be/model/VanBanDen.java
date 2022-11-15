@@ -5,7 +5,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -15,14 +18,18 @@ import java.util.UUID;
 @AllArgsConstructor
 public class VanBanDen {
     @Id
-    private Integer id;
+    private String id;
     private String soVanBanDen;
     private String tenVanBanDen;
 
 
     private LocalDate ngayPhatHanh;
 
-    private LocalDate ngayDen;
+    private LocalDateTime ngayDen;
     private String noiPhatHanh;
     private String tenTapTin;
+
+    @ManyToOne
+    @JoinColumn
+    private Account account;
 }

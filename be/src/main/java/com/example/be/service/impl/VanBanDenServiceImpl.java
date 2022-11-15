@@ -4,6 +4,7 @@ import com.example.be.model.VanBanDen;
 import com.example.be.repository.VanBanDenRepository;
 import com.example.be.service.VanBanDenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class VanBanDenServiceImpl implements VanBanDenService {
     }
 
     @Override
-    public VanBanDen findById(Integer id) {
+    public VanBanDen findById(String id) {
         return vanBanDenRepository.findById(id).orElse(null);
     }
 

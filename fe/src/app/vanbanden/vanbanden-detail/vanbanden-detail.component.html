@@ -1,2 +1,52 @@
-<p>vanbanden-detail works!</p>
-<a href="assets/upload/{{vanBanDen.id}}/{{vanBanDen.tenTapTin}}" target="_blank">{{vanBanDen.tenTapTin}}</a>
+ <h3>Chi tiết văn bản đến</h3>
+ <div *ngIf="vanBanDen">
+   <div *ngIf="account.role=='ROLE_ADMIN'">
+     <button style="margin-right: 10px">Edit</button>
+     <button>Delete</button>
+   </div>
+    <div class="row">
+      <div class="col-3">
+        <label> Ngày Đến</label>
+      </div>
+      <div class="col-9">
+        {{vanBanDen.ngayDen | date:'medium'}}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-3">
+        <label>Tên Văn Bản Đến</label>
+      </div>
+      <div class="col-9">
+        <h6>
+          {{vanBanDen.tenVanBanDen}}
+        </h6>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-3">
+        <label>Ngày Phát Hành</label>
+      </div>
+      <div class="col-9">
+        {{vanBanDen.ngayPhatHanh | date:'dd/MM/yyyy'}}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-3">
+        <label>File đính kèm</label>
+      </div>
+      <div class="col-9">
+        <a href="assets/upload/{{vanBanDen.id}}/{{vanBanDen.tenTapTin}}" target="_blank">{{vanBanDen.tenTapTin}}</a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-3">Người chịu trách nhiệm chính</div>
+      <div class="col-9">
+        {{vanBanDen.account.name}}
+      </div>
+    </div>
+ </div>
+

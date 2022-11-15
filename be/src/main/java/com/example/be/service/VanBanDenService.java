@@ -7,7 +7,7 @@ import java.util.List;
 public interface VanBanDenService {
     void save(VanBanDen vanBanDen);
     List<VanBanDen> findAll();
-    VanBanDen findById(Integer id);
+    VanBanDen findById(String id);
     void delete(VanBanDen vanBanDen);
 
 }

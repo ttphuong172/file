@@ -14,7 +14,9 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 
 @RestController
@@ -32,17 +34,10 @@ public class VanBanDenController {
 
     @PostMapping("upload")
     public ResponseEntity<String> upload(@RequestParam("soVanBanDen") String soVanBanDen,@RequestParam("noiPhatHanh") String noiPhatHanh,@RequestParam("ngayPhatHanh") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate ngayPhatHanh, @RequestParam("tenVanBanDen") String tenVanBanDen, @RequestParam("file") MultipartFile file) {
-        Integer id;
-        List<VanBanDen> vanBanDenList = vanBanDenService.findAll();
-        if(vanBanDenList.size()==0){
-            id=1;
-        } else {
-            System.out.println(vanBanDenList.get(vanBanDenList.size()-1).getId());
-            id = vanBanDenList.get(vanBanDenList.size()-1).getId() + 1;
-        }
+
+        String id = UUID.randomUUID().toString();
 
         String fileDir = currentDir.concat(String.valueOf(id));
-
 
 //        Tao thu muc
         try {
@@ -65,7 +60,7 @@ public class VanBanDenController {
         vanBanDen.setTenVanBanDen(tenVanBanDen);
         vanBanDen.setNoiPhatHanh(noiPhatHanh);
         vanBanDen.setNgayPhatHanh(ngayPhatHanh);
-        vanBanDen.setNgayDen(LocalDate.now());
+        vanBanDen.setNgayDen(LocalDateTime.now());
         vanBanDen.setTenTapTin(file.getOriginalFilename());
         vanBanDenService.save(vanBanDen);
 
@@ -75,7 +70,7 @@ public class VanBanDenController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<VanBanDen> findById(@PathVariable Integer id) {
+    public ResponseEntity<VanBanDen> findById(@PathVariable String id) {
         VanBanDen vanBanDen= vanBanDenService.findById(id);
         if (vanBanDen==null){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
