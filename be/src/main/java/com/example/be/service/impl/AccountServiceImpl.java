@@ -26,4 +26,9 @@ public class AccountServiceImpl implements AccountService {
     public void save(Account account) {
         accountRepository.save(account);
     }
+
+    @Override
+    public List<Account> findAccountsByDepartment_Id(int id) {
+        return accountRepository.findAccountsByDepartment_Id(id);
+    }
 }

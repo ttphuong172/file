@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../environments/environment";
+import {AuthService} from "./auth.service";
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,8 @@ import {environment} from "../environments/environment";
 export class AccountService {
   private apiURL = environment.apiURL;
   constructor(
-    private httpClient:HttpClient
+    private httpClient:HttpClient,
+    private authService:AuthService
   ) { }
   findAll(){
     return  this.httpClient.get(this.apiURL+ '/api/accounts')
@@ -25,4 +27,13 @@ export class AccountService {
   save(account:any){
     return this.httpClient.post(this.apiURL+ '/api/accounts',account)
   }
+  findAccountsByDepartment_Id(id:any){
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': "Bearer " + this.authService.getToken()
+      })
+    }
+    return this.httpClient.get(this.apiURL + '/api/accounts/department/' + id, httpOptions);
+  }
+
 }

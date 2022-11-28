@@ -8,4 +8,5 @@ public interface AccountService {
     List<Account> findAll();
     Account findById(String username);
     void save(Account account);
+    List<Account> findAccountsByDepartment_Id(int id);
 }

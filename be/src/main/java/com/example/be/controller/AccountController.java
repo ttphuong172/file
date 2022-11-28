@@ -53,4 +53,8 @@ public class AccountController {
         accountService.save(account);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @GetMapping("department/{id}")
+    public ResponseEntity<List<Account>> findAccountsByDepartment_Id(@PathVariable int id){
+        return new ResponseEntity<>(accountService.findAccountsByDepartment_Id(id),HttpStatus.OK);
+    }
 }

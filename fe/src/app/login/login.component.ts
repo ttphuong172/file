@@ -31,9 +31,11 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.authService.getToken()){
-      this.router.navigateByUrl("/vanbanden")
-    };
+    // @ts-ignore
+   if(!this.jwtHelperService.isTokenExpired(this.authService.getToken())){
+     this.router.navigateByUrl("/vanbanden")
+   }
+
   }
 
   login() {

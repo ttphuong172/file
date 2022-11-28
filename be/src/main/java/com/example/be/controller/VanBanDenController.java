@@ -1,11 +1,15 @@
 package com.example.be.controller;
 
+import com.example.be.model.Account;
 import com.example.be.model.VanBanDen;
+import com.example.be.service.AccountService;
 import com.example.be.service.VanBanDenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,6 +29,8 @@ import java.util.UUID;
 public class VanBanDenController {
     @Autowired
     private VanBanDenService vanBanDenService;
+    @Autowired
+            private AccountService accountService;
 
     //    Khi chay local
     String currentDir = System.getProperty("user.dir").substring(0, System.getProperty("user.dir").length() - 3).concat("\\fe\\src\\assets\\upload\\");
@@ -33,7 +39,7 @@ public class VanBanDenController {
 //    String currentDir = System.getProperty("user.dir").concat("\\webapps\\qlvb\\assets\\upload\\") ;
 
     @PostMapping("upload")
-    public ResponseEntity<String> upload(@RequestParam("soVanBanDen") String soVanBanDen,@RequestParam("noiPhatHanh") String noiPhatHanh,@RequestParam("ngayPhatHanh") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate ngayPhatHanh, @RequestParam("tenVanBanDen") String tenVanBanDen, @RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> upload(@RequestParam("soVanBanDen") String soVanBanDen, @RequestParam("noiPhatHanh") String noiPhatHanh, @RequestParam("ngayPhatHanh") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate ngayPhatHanh, @RequestParam("tenVanBanDen") String tenVanBanDen, @RequestParam("account")String account, @RequestParam("file") MultipartFile file) {
 
         String id = UUID.randomUUID().toString();
 
@@ -60,6 +66,7 @@ public class VanBanDenController {
         vanBanDen.setTenVanBanDen(tenVanBanDen);
         vanBanDen.setNoiPhatHanh(noiPhatHanh);
         vanBanDen.setNgayPhatHanh(ngayPhatHanh);
+        vanBanDen.setAccount(this.accountService.findById(account));
         vanBanDen.setNgayDen(LocalDateTime.now());
         vanBanDen.setTenTapTin(file.getOriginalFilename());
         vanBanDenService.save(vanBanDen);
@@ -112,6 +119,10 @@ public class VanBanDenController {
 
     @GetMapping("")
     public ResponseEntity<List<VanBanDen>> findAll() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        System.out.println(auth.getName());
+
         return new ResponseEntity<>(vanBanDenService.findAll(), HttpStatus.OK);
     }
 
